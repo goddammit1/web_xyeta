@@ -1,0 +1,241 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",
+    "name": "Bloom Filter API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Ping Server",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/ping",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["ping"]
+        }
+      }
+    },
+    {
+      "name": "2. Initialize String Filter",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"size\": 1000,\n    \"hash_functions\": [\"str_simple\", \"str_polynomial\"],\n    \"key_type\": \"str\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/init",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["init"]
+        }
+      }
+    },
+    {
+      "name": "3. Insert String Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"key\": \"apple\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/insert",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["insert"]
+        }
+      }
+    },
+    {
+      "name": "4. Search Existing String Key",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/search?key=apple",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "key",
+              "value": "apple"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Search Missing String Key",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/search?key=banana",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "key",
+              "value": "banana"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Initialize Integer Filter",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"size\": 2000,\n    \"hash_functions\": [\"int_multiply\", \"int_xor\", \"universal_md5\"],\n    \"key_type\": \"int\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/init",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["init"]
+        }
+      }
+    },
+    {
+      "name": "7. Insert Integer Key",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"key\": 42}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/insert",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["insert"]
+        }
+      }
+    },
+    {
+      "name": "8. Search Existing Integer Key",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/search?key=42",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "key",
+              "value": "42"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Test False Positive",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/search?key=999999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["search"],
+          "query": [
+            {
+              "key": "key",
+              "value": "999999"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "10. Invalid Hash Function",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"size\": 500,\n    \"hash_functions\": [\"unknown_function\"],\n    \"key_type\": \"str\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/init",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["init"]
+        }
+      }
+    },
+    {
+      "name": "11. Type Mismatch Error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"key\": \"text\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/insert",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["insert"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:        
+  ping-service:  
+    build: .     
+    image: my-image:latest  
+    container_name: my-ping-server 
+    ports:
+      - "8000:8000" 
+    restart: unless-stopped 
